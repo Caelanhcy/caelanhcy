@@ -59,7 +59,7 @@ function renderInlineMd(s: string): string {
 }
 ---
 <Base
-  title={`${cap.label.toLowerCase()} — caelan h.c.y`}
+  title={`${cap.label} — Caelan H.C.Y`}
   description={cap.thesis}
   active="field"
 >
@@ -71,11 +71,11 @@ function renderInlineMd(s: string): string {
         <FieldHeroScene client:only="react" capabilityId={cap.id} />
       </div>
       <div class="field-hero-text">
-        <p class="eyebrow">[ {numA} · field / {cap.label.toLowerCase()} ]</p>
-        <h1>{cap.label.toLowerCase()}.</h1>
+        <p class="eyebrow">[ {numA} · Field / {cap.label} ]</p>
+        <h1>{cap.label}.</h1>
         <p class="thesis-lede">{cap.thesis}</p>
         <p class="field-back">
-          <a href="/">[ ↩ back to the field ]</a>
+          <a href="/">[ ↩ Back to the Field ]</a>
         </p>
       </div>
     </header>
@@ -85,9 +85,9 @@ function renderInlineMd(s: string): string {
       <section class="tile col-12 field-body">
         <div class="tile-id">
           <span class="id-num">{numA}</span>
-          <span>essay</span>
+          <span>Essay</span>
           <span class="id-rule"></span>
-          <span>{cap.eyebrow.toLowerCase()}</span>
+          <span>{cap.eyebrow}</span>
         </div>
         <div class="field-essay">
           <Content />
@@ -100,15 +100,15 @@ function renderInlineMd(s: string): string {
       <section class="tile col-12">
         <div class="tile-id">
           <span class="id-num">{numB}</span>
-          <span>anchored work</span>
+          <span>Anchored Work</span>
           <span class="id-rule"></span>
-          <span>where this shows up in practice</span>
+          <span>Where This Shows Up in Practice</span>
         </div>
-        <h2>anchored work</h2>
+        <h2>Anchored Work</h2>
         <div class="field-artifact-list">
           {cap.artifacts.map((a) => (
             <div class="sub-tile field-artifact">
-              <h4>{a.title.toLowerCase()}</h4>
+              <h4>{a.title}</h4>
               <p>{a.detail}</p>
             </div>
           ))}
@@ -121,18 +121,18 @@ function renderInlineMd(s: string): string {
       <section class="tile col-12">
         <div class="tile-id">
           <span class="id-num">{numC}</span>
-          <span>reinforces</span>
+          <span>Reinforces</span>
           <span class="id-rule"></span>
-          <span>strengthens, and is strengthened by</span>
+          <span>Strengthens, and Is Strengthened By</span>
         </div>
-        <h2>reinforces</h2>
-        <p>this field strengthens, and is strengthened by:</p>
+        <h2>Reinforces</h2>
+        <p>This field strengthens, and is strengthened by:</p>
         <div class="field-reinforces-row">
           {reinforcesMeta.map((r) => (
             <a class="field-reinforce-link" href={`/field/${r.id}`}>
               <span class="num">{r.number}</span>
-              <span class="label">→ {r.label.toLowerCase()}</span>
-              <span class="eyebrow-min">{r.eyebrow.toLowerCase()}</span>
+              <span class="label">→ {r.label}</span>
+              <span class="eyebrow-min">{r.eyebrow}</span>
             </a>
           ))}
         </div>
@@ -144,11 +144,11 @@ function renderInlineMd(s: string): string {
       <section class="tile col-12 field-start">
         <div class="tile-id">
           <span class="id-num">{numD}</span>
-          <span>where to start</span>
+          <span>Where to Start</span>
           <span class="id-rule"></span>
-          <span>for the learner</span>
+          <span>For the Learner</span>
         </div>
-        <h2>where to start</h2>
+        <h2>Where to Start</h2>
         <p set:html={renderInlineMd(whereToStart)} />
       </section>
     </div>

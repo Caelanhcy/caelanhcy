@@ -11,7 +11,7 @@ interface Props {
 }
 
 const {
-  title = 'caelan h.c.y',
+  title = 'Caelan H.C.Y',
   description = 'Caelan H.C.Y — Malaysian merchandising director and founder, based in Shenzhen.',
   bodyClass = '',
   showRail = true,
@@ -31,7 +31,7 @@ const counterpartHref = lang === 'zh'
 // Locale-aware nav labels.
 const navLabels = lang === 'zh'
   ? { index: '首页', about: '关于', contact: '联系' }
-  : { index: 'index', about: 'about', contact: 'contact' };
+  : { index: 'Index', about: 'About', contact: 'Contact' };
 
 // Locale-aware home href + rail base.
 const homeHref = lang === 'zh' ? '/zh' : '/';
@@ -78,9 +78,9 @@ const contactHref = lang === 'zh' ? '/zh/contact' : '/contact';
         <a href={lang === 'zh' ? '#' : counterpartHref} class={'seg' + (lang === 'zh' ? ' is-active' : '')} aria-label="中文" aria-current={lang === 'zh' ? 'page' : undefined}>中</a>
       </div>
       <div class="theme-toggle" id="theme-toggle" role="group" aria-label="Theme">
-        <button type="button" class="seg" data-theme-set="light" aria-label="Light mode">[ light ]</button>
+        <button type="button" class="seg" data-theme-set="light" aria-label="Light mode">[ Light ]</button>
         <span class="sep">/</span>
-        <button type="button" class="seg" data-theme-set="dark" aria-label="Dark mode">[ dark ]</button>
+        <button type="button" class="seg" data-theme-set="dark" aria-label="Dark mode">[ Dark ]</button>
       </div>
     </div>
 

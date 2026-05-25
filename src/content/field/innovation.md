@@ -1,5 +1,5 @@
 ---
-title: innovation
+title: Innovation
 number: "02"
 thesis: "What innovation actually is. How it actually gets implemented."
 lastUpdated: "2026-05-21"
@@ -8,19 +8,19 @@ draft: false
 
 <span class="field-lead">Innovation</span> usually begins as a spark in a dark corner of a room nobody else is in. It is small. It is easy to step on. The reflex, when you notice it, is to either announce it or extinguish it — both are ways of getting out of the dark faster. The discipline is to sit there a while longer than feels reasonable. To watch what kind of fuel the spark is. Dynamite goes off in a quarter. A new element takes a decade. A slow fire, banked correctly, can outlast its founder. You will not know which one you have on the day you find it. The dark is where you find out.
 
-## the thesis
+## The Thesis
 
 Innovation is durable new value. A thing the market did not have, that the market keeps wanting once it appears. The keyword is *durable*. Anything that arrives once, photographs well, and is forgotten in a quarter is not innovation — it is novelty. The two read identically in a pitch deck and diverge completely in the data three years later.
 
 The work is to tell them apart in advance.
 
-## the misconception
+## The Misconception
 
 The default reading of innovation is that it is about the idea. A clever idea. A breakthrough idea. A first-of-its-kind idea. Companies host hackathons. Teams brainstorm. Decks are written.
 
 Ideas are cheap. The implementation seam — the gap between a good idea and a production system that ships it on cadence — is where innovation actually lives, and it is where almost every programme dies. A novel product without a development calendar is a prototype. A novel product without a supply chain is a story. The innovation is not the idea. The innovation is the *system that lets the idea ship on rhythm*.
 
-## the actual discipline
+## The Actual Discipline
 
 Innovation has three parts. The first part is days of work. The second is a year. The third is a career.
 
@@ -32,7 +32,7 @@ Innovation has three parts. The first part is days of work. The second is a year
 
 If you cannot ship it on rhythm, you have not innovated. You have demonstrated.
 
-## at the deep end
+## At the Deep End
 
 A note for the practitioner.
 
@@ -42,13 +42,13 @@ Most operators have not metabolised what that 1987 moment quietly settled. They 
 
 The seat in Chinese technical apparel with credentialing, context, and a point of view is, across the whole category, empty. AERLYTE proposes to occupy it. The certification is what earns the right to claim the perspective. The perspective is what people remember once the certification is no longer scarce.
 
-## how to practice it
+## How to Practice It
 
 Read Clayton Christensen's *The Innovator's Dilemma* once, and Ben Thompson's Stratechery archive on aggregation theory for the modern version. Then read industry case studies from outside your field — Toyota's production system, Patagonia's supply-chain decisions, Arc'teryx's product-development cadence at Vancouver. Look for the operating model, not the hero product.
 
 Then ship something on rhythm. Set a calendar. A small product, a small system, a quarterly cadence. The discipline is not the first ship. It is the third, the fourth, the eighth — when the brief is harder, the team is tired, and the market has stopped paying attention. Most programmes fail there. The ones that survive are the ones that learned to ship on rhythm.
 
-## the harder problem
+## The Harder Problem
 
 The hardest part is the second product.
 

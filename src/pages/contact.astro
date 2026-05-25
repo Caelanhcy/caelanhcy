@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
 ---
 <Base
-  title="contact — caelan h.c.y"
+  title="Contact — Caelan H.C.Y"
   description="A short qualifying form. Restrained, factual."
   active="contact"
 >
@@ -30,45 +30,45 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
             </div>
           </figure>
           <div class="id-text">
-            <p style="margin-bottom: var(--space-1);">[ inbound / qualifying form ]</p>
-            <h1>contact</h1>
-            <p style="margin-top: var(--space-1);">recipient · caelan h.c.y</p>
+            <p style="margin-bottom: var(--space-1);">[ Inbound / Qualifying Form ]</p>
+            <h1>Contact</h1>
+            <p style="margin-top: var(--space-1);">Recipient · Caelan H.C.Y</p>
           </div>
         </section>
 
         <section class="tile category-strip">
           <div class="tile-id">
             <span class="id-num">01</span>
-            <span>category</span>
+            <span>Category</span>
             <span class="id-rule"></span>
-            <span>select one</span>
+            <span>Select One</span>
           </div>
-          <span class="field-label">reason for reaching out</span>
+          <span class="field-label">Reason for Reaching Out</span>
           <div class="chip-row" role="radiogroup" aria-label="Reason">
             <label>
               <span class="chip-num">01</span>
               <input type="radio" name="category" value="Hiring" required />
-              <span>hiring</span>
+              <span>Hiring</span>
             </label>
             <label>
               <span class="chip-num">02</span>
               <input type="radio" name="category" value="Advisory / Board" />
-              <span>advisory / board</span>
+              <span>Advisory / Board</span>
             </label>
             <label>
               <span class="chip-num">03</span>
               <input type="radio" name="category" value="Press / Media" />
-              <span>press / media</span>
+              <span>Press / Media</span>
             </label>
             <label>
               <span class="chip-num">04</span>
               <input type="radio" name="category" value="Speaking" />
-              <span>speaking</span>
+              <span>Speaking</span>
             </label>
             <label>
               <span class="chip-num">05</span>
               <input type="radio" name="category" value="Other" />
-              <span>other</span>
+              <span>Other</span>
             </label>
           </div>
         </section>
@@ -79,130 +79,130 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
         <section class="tile field-grid-tile">
           <div class="tile-id">
             <span class="id-num">02</span>
-            <span>fields</span>
+            <span>Fields</span>
             <span class="id-rule"></span>
-            <span>branch + universal</span>
+            <span>Branch + Universal</span>
           </div>
 
           <div class="tile-grid-phi">
             {/* Left 62% — branch-specific */}
             <div class="sub-tile branch-tile">
-              <h4>[ branch ]</h4>
+              <h4>[ Branch ]</h4>
 
               <div class="branches-wrap">
                 <div class="branch" data-branch="Hiring" hidden>
                   <div class="field">
-                    <label for="hire-company">company</label>
+                    <label for="hire-company">Company</label>
                     <input id="hire-company" type="text" name="hiring_company" autocomplete="organization" />
                   </div>
                   <div class="field">
-                    <label for="hire-role">role title</label>
+                    <label for="hire-role">Role Title</label>
                     <input id="hire-role" type="text" name="hiring_role" />
                   </div>
                   <div class="field">
-                    <label for="hire-base">base salary range</label>
-                    <input id="hire-base" type="text" name="hiring_base" placeholder="e.g. usd 220–280k" />
+                    <label for="hire-base">Base Salary Range</label>
+                    <input id="hire-base" type="text" name="hiring_base" placeholder="e.g. USD 220–280k" />
                   </div>
                   <div class="field">
-                    <label for="hire-location">location / remote</label>
+                    <label for="hire-location">Location / Remote</label>
                     <input id="hire-location" type="text" name="hiring_location" />
                   </div>
                   <div class="field">
-                    <label for="hire-desc">brief description</label>
+                    <label for="hire-desc">Brief Description</label>
                     <textarea id="hire-desc" name="hiring_description" rows="4"></textarea>
                   </div>
                 </div>
 
                 <div class="branch" data-branch="Advisory / Board" hidden>
                   <div class="field">
-                    <label for="adv-company">company</label>
+                    <label for="adv-company">Company</label>
                     <input id="adv-company" type="text" name="advisory_company" />
                   </div>
                   <div class="field">
-                    <label for="adv-stage">stage</label>
-                    <input id="adv-stage" type="text" name="advisory_stage" placeholder="seed / series a / growth" />
+                    <label for="adv-stage">Stage</label>
+                    <input id="adv-stage" type="text" name="advisory_stage" placeholder="Seed / Series A / Growth" />
                   </div>
                   <div class="field">
-                    <label for="adv-commit">time commitment expected</label>
+                    <label for="adv-commit">Time Commitment Expected</label>
                     <input id="adv-commit" type="text" name="advisory_commitment" placeholder="e.g. 4 hrs / month" />
                   </div>
                   <div class="field">
-                    <label for="adv-desc">brief description</label>
+                    <label for="adv-desc">Brief Description</label>
                     <textarea id="adv-desc" name="advisory_description" rows="4"></textarea>
                   </div>
                 </div>
 
                 <div class="branch" data-branch="Press / Media" hidden>
                   <div class="field">
-                    <label for="press-pub">publication</label>
+                    <label for="press-pub">Publication</label>
                     <input id="press-pub" type="text" name="press_publication" />
                   </div>
                   <div class="field">
-                    <label for="press-deadline">deadline</label>
+                    <label for="press-deadline">Deadline</label>
                     <input id="press-deadline" type="text" name="press_deadline" />
                   </div>
                   <div class="field">
-                    <label for="press-angle">angle</label>
+                    <label for="press-angle">Angle</label>
                     <input id="press-angle" type="text" name="press_angle" />
                   </div>
                   <div class="field">
-                    <label for="press-desc">brief description</label>
+                    <label for="press-desc">Brief Description</label>
                     <textarea id="press-desc" name="press_description" rows="4"></textarea>
                   </div>
                 </div>
 
                 <div class="branch" data-branch="Speaking" hidden>
                   <div class="field">
-                    <label for="spk-event">event name</label>
+                    <label for="spk-event">Event Name</label>
                     <input id="spk-event" type="text" name="speaking_event" />
                   </div>
                   <div class="field">
-                    <label for="spk-date">date</label>
+                    <label for="spk-date">Date</label>
                     <input id="spk-date" type="text" name="speaking_date" />
                   </div>
                   <div class="field">
-                    <label for="spk-audience">audience description</label>
+                    <label for="spk-audience">Audience Description</label>
                     <input id="spk-audience" type="text" name="speaking_audience" />
                   </div>
                   <div class="field">
-                    <label for="spk-format">format</label>
-                    <input id="spk-format" type="text" name="speaking_format" placeholder="panel / keynote / workshop" />
+                    <label for="spk-format">Format</label>
+                    <input id="spk-format" type="text" name="speaking_format" placeholder="Panel / Keynote / Workshop" />
                   </div>
                   <div class="field">
-                    <label for="spk-hono">honorarium range</label>
+                    <label for="spk-hono">Honorarium Range</label>
                     <input id="spk-hono" type="text" name="speaking_honorarium" />
                   </div>
                 </div>
 
                 <div class="branch" data-branch="Other" hidden>
                   <div class="field">
-                    <label for="other-desc">message</label>
+                    <label for="other-desc">Message</label>
                     <textarea id="other-desc" name="other_description" rows="6"></textarea>
                   </div>
                 </div>
 
                 <p id="branch-empty" style="font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.06em; color: var(--ink-3);">
-                  select a category above to reveal branch-specific fields.
+                  Select a category above to reveal branch-specific fields.
                 </p>
               </div>
             </div>
 
             {/* Right 38% — universal */}
             <div class="sub-tile universal-tile">
-              <h4>[ universal ]</h4>
+              <h4>[ Universal ]</h4>
               <div class="branch" style="display:grid; gap: var(--space-3);">
                 <div class="field">
-                  <label for="name">your name</label>
+                  <label for="name">Your Name</label>
                   <input id="name" type="text" name="name" autocomplete="name" required />
                 </div>
 
                 <div class="field">
-                  <label for="email">email</label>
+                  <label for="email">Email</label>
                   <input id="email" type="email" name="email" autocomplete="email" required />
                 </div>
 
                 <div class="field">
-                  <label for="referrer">how did you find me? <span class="muted">(optional)</span></label>
+                  <label for="referrer">How Did You Find Me? <span class="muted">(optional)</span></label>
                   <input id="referrer" type="text" name="referrer" />
                 </div>
               </div>
@@ -217,10 +217,10 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
       {/* Module 3 — submit band ------------------------------------- */}
       <div class="grid-12">
         <div class="submit-band">
-          <button class="submit-btn" type="submit">[ send ]</button>
+          <button class="submit-btn" type="submit">[ Send ]</button>
           <div class="submit-status">
-            <span class="ready">[ ready ]</span> &nbsp; replies are restrained and factual.
-            &nbsp;·&nbsp; direct line: <a href="mailto:chuanyichuanyi@gmail.com" style="border-bottom: 1px solid var(--rule-soft); color: inherit;">chuanyichuanyi@gmail.com</a>
+            <span class="ready">[ Ready ]</span> &nbsp; Replies are restrained and factual.
+            &nbsp;·&nbsp; Direct line: <a href="mailto:chuanyichuanyi@gmail.com" style="border-bottom: 1px solid var(--rule-soft); color: inherit;">chuanyichuanyi@gmail.com</a>
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
 
     <div class="grid-12" id="thanks-wrap" hidden>
       <div class="thanks">
-        <p>thank you. received. a reply will follow — measured, on its own cadence.</p>
+        <p>Thank you. Received. A reply will follow — measured, on its own cadence.</p>
       </div>
     </div>
 

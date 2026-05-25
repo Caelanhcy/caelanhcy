@@ -501,7 +501,7 @@ function CapabilityCluster({
           <span className="cap-label">
             <span className="cap-label-num">{cap.number}</span>
             <span className="cap-label-sep"> / </span>
-            <span className="cap-label-name">{lang === 'zh' ? cap.labelZh : cap.label.toLowerCase()}</span>
+            <span className="cap-label-name">{lang === 'zh' ? cap.labelZh : cap.label}</span>
           </span>
         </button>
       </Html>

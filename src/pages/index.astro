@@ -4,7 +4,7 @@ import { CAPABILITIES } from '../data/capabilities';
 import CapabilityScene from '../components/CapabilityScene.tsx';
 ---
 <Base
-  title="caelan h.c.y"
+  title="Caelan H.C.Y"
   description="A generative field of the operating practice — Malaysian, Shenzhen-based; merchandising director and founder."
   active="home"
 >
@@ -15,24 +15,24 @@ import CapabilityScene from '../components/CapabilityScene.tsx';
 
     {/* The light, lowercase mono chrome surviving from TE — the only
         engineering chrome on this register. */}
-    <p class="stage-corner-id"><span class="num">[ 01 ]</span> &nbsp; index / capability field</p>
-    <p class="stage-hint">hover a bloom. click to open. the centre opens the cv.</p>
+    <p class="stage-corner-id"><span class="num">[ 01 ]</span> &nbsp; Index / Capability Field</p>
+    <p class="stage-hint">Hover a bloom. Click to open. The centre opens the CV.</p>
   </main>
 
   {/* Mobile fallback: ordered list of capabilities (unchanged) */}
   <section class="mobile-fallback" aria-label="Capability index">
-    <p class="lede">caelan h.c.y — six clusters</p>
-    <h1>one practice, six clusters.</h1>
+    <p class="lede">Caelan H.C.Y — Six Clusters</p>
+    <h1>One Practice, Six Clusters.</h1>
     <p class="muted" style="margin-bottom:32px;">
-      malaysian. based in shenzhen. merchandising director and founder.
-      the field view is best on a larger screen — below is the same content, indexed.
+      Malaysian. Based in Shenzhen. Merchandising director and founder.
+      The field view is best on a larger screen — below is the same content, indexed.
     </p>
     <ul>
       {CAPABILITIES.map((c) => (
         <li>
           <button type="button" data-cap-id={c.id} aria-label={`Open ${c.label} essay`}>
-            <span>{c.label.toLowerCase()}</span>
-            <span class="idx">{c.number} &nbsp;·&nbsp; {c.eyebrow.toLowerCase()}</span>
+            <span>{c.label}</span>
+            <span class="idx">{c.number} &nbsp;·&nbsp; {c.eyebrow}</span>
           </button>
         </li>
       ))}
@@ -41,15 +41,15 @@ import CapabilityScene from '../components/CapabilityScene.tsx';
 
   {/* Side panel — interstitial prompt. Thesis only; deep content lives on /field/[slug]. */}
   <aside class="panel" id="panel" aria-hidden="true" aria-labelledby="panel-title">
-    <button class="panel-close" type="button" id="panel-close" aria-label="Close panel">[ close ]</button>
+    <button class="panel-close" type="button" id="panel-close" aria-label="Close panel">[ Close ]</button>
     <p class="panel-eyebrow" id="panel-eyebrow">—</p>
     <h2 id="panel-title">—</h2>
     <p class="panel-thesis" id="panel-thesis">—</p>
     <a class="panel-cta" id="panel-cta" href="#">
       <span class="panel-cta-arrow">→</span>
-      <span class="panel-cta-label">read the full essay</span>
+      <span class="panel-cta-label">Read the Full Essay</span>
     </a>
-    <p class="panel-cta-meta" id="panel-cta-meta">six-to-eight-minute read · part of <em>field</em></p>
+    <p class="panel-cta-meta" id="panel-cta-meta">Six-to-eight-minute read · part of <em>Field</em></p>
   </aside>
 
   <script>
@@ -68,11 +68,11 @@ import CapabilityScene from '../components/CapabilityScene.tsx';
         console.log('[panel] ABORT — missing DOM refs');
         return;
       }
-      titleEl.textContent = cap.label.toLowerCase();
-      eyebrowEl.textContent = `[ ${cap.number} / ${cap.label.toLowerCase()} ]`;
+      titleEl.textContent = cap.label;
+      eyebrowEl.textContent = `[ ${cap.number} / ${cap.label} ]`;
       thesisEl.textContent = cap.thesis;
       ctaEl.href = `/field/${cap.id}`;
-      ctaEl.setAttribute('aria-label', `Read the full essay on ${cap.label.toLowerCase()}`);
+      ctaEl.setAttribute('aria-label', `Read the full essay on ${cap.label}`);
 
       panelEl.classList.add('is-open');
       panelEl.setAttribute('aria-hidden', 'false');
