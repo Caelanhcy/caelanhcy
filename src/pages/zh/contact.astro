@@ -1,0 +1,294 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Formspree endpoint — replace before deploy.
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
+---
+<Base
+  title="联系 — 洪全毅 caelan h.c.y"
+  description="一份简短的甄别表。克制；以事实为准。"
+  active="contact"
+  lang="zh"
+>
+  <article class="contact-page">
+
+    <form
+      id="contact-form"
+      method="POST"
+      action={FORMSPREE_ENDPOINT}
+    >
+
+      {/* 模块一 —— 身份卡 + 类别条 ------------------- */}
+      <div class="grid-12">
+        <section class="tile contact-id-tile">
+          <figure class="portrait-card portrait-card--small" style="margin:0;">
+            <div class="portrait-frame">
+              <img src="/portrait/portrait-small.jpg" alt="洪全毅 Caelan H.C.Y" width="96" height="120" loading="eager" />
+              <span class="corner corner--tl" aria-hidden="true"></span>
+              <span class="corner corner--tr" aria-hidden="true"></span>
+              <span class="corner corner--bl" aria-hidden="true"></span>
+              <span class="corner corner--br" aria-hidden="true"></span>
+            </div>
+          </figure>
+          <div class="id-text">
+            <p style="margin-bottom: var(--space-1);">[ 来件 / 甄别表 ]</p>
+            <h1>联系</h1>
+            <p style="margin-top: var(--space-1);">收件人 · 洪全毅 caelan h.c.y</p>
+          </div>
+        </section>
+
+        <section class="tile category-strip">
+          <div class="tile-id">
+            <span class="id-num">01</span>
+            <span>类别</span>
+            <span class="id-rule"></span>
+            <span>请选一项</span>
+          </div>
+          <span class="field-label">来件目的</span>
+          <div class="chip-row" role="radiogroup" aria-label="目的">
+            <label>
+              <span class="chip-num">01</span>
+              <input type="radio" name="category" value="Hiring" required />
+              <span>招聘</span>
+            </label>
+            <label>
+              <span class="chip-num">02</span>
+              <input type="radio" name="category" value="Advisory / Board" />
+              <span>顾问 / 董事</span>
+            </label>
+            <label>
+              <span class="chip-num">03</span>
+              <input type="radio" name="category" value="Press / Media" />
+              <span>媒体</span>
+            </label>
+            <label>
+              <span class="chip-num">04</span>
+              <input type="radio" name="category" value="Speaking" />
+              <span>演讲</span>
+            </label>
+            <label>
+              <span class="chip-num">05</span>
+              <input type="radio" name="category" value="Other" />
+              <span>其他</span>
+            </label>
+          </div>
+        </section>
+      </div>
+
+      {/* 模块二 —— 字段网格（瓦片内 62/38）-------------- */}
+      <div class="grid-12">
+        <section class="tile field-grid-tile">
+          <div class="tile-id">
+            <span class="id-num">02</span>
+            <span>字段</span>
+            <span class="id-rule"></span>
+            <span>分支 + 通用</span>
+          </div>
+
+          <div class="tile-grid-phi">
+            {/* 左 62% —— 分支字段 */}
+            <div class="sub-tile branch-tile">
+              <h4>[ 分支 ]</h4>
+
+              <div class="branches-wrap">
+                <div class="branch" data-branch="Hiring" hidden>
+                  <div class="field">
+                    <label for="hire-company">公司</label>
+                    <input id="hire-company" type="text" name="hiring_company" autocomplete="organization" />
+                  </div>
+                  <div class="field">
+                    <label for="hire-role">职位名称</label>
+                    <input id="hire-role" type="text" name="hiring_role" />
+                  </div>
+                  <div class="field">
+                    <label for="hire-base">基础薪资区间</label>
+                    <input id="hire-base" type="text" name="hiring_base" placeholder="例如 USD 220–280k" />
+                  </div>
+                  <div class="field">
+                    <label for="hire-location">地点 / 远程</label>
+                    <input id="hire-location" type="text" name="hiring_location" />
+                  </div>
+                  <div class="field">
+                    <label for="hire-desc">简要说明</label>
+                    <textarea id="hire-desc" name="hiring_description" rows="4"></textarea>
+                  </div>
+                </div>
+
+                <div class="branch" data-branch="Advisory / Board" hidden>
+                  <div class="field">
+                    <label for="adv-company">公司</label>
+                    <input id="adv-company" type="text" name="advisory_company" />
+                  </div>
+                  <div class="field">
+                    <label for="adv-stage">阶段</label>
+                    <input id="adv-stage" type="text" name="advisory_stage" placeholder="种子 / A 轮 / 成长期" />
+                  </div>
+                  <div class="field">
+                    <label for="adv-commit">预期投入时间</label>
+                    <input id="adv-commit" type="text" name="advisory_commitment" placeholder="例如 每月 4 小时" />
+                  </div>
+                  <div class="field">
+                    <label for="adv-desc">简要说明</label>
+                    <textarea id="adv-desc" name="advisory_description" rows="4"></textarea>
+                  </div>
+                </div>
+
+                <div class="branch" data-branch="Press / Media" hidden>
+                  <div class="field">
+                    <label for="press-pub">媒体 / 出版物</label>
+                    <input id="press-pub" type="text" name="press_publication" />
+                  </div>
+                  <div class="field">
+                    <label for="press-deadline">截稿日期</label>
+                    <input id="press-deadline" type="text" name="press_deadline" />
+                  </div>
+                  <div class="field">
+                    <label for="press-angle">切入角度</label>
+                    <input id="press-angle" type="text" name="press_angle" />
+                  </div>
+                  <div class="field">
+                    <label for="press-desc">简要说明</label>
+                    <textarea id="press-desc" name="press_description" rows="4"></textarea>
+                  </div>
+                </div>
+
+                <div class="branch" data-branch="Speaking" hidden>
+                  <div class="field">
+                    <label for="spk-event">活动名称</label>
+                    <input id="spk-event" type="text" name="speaking_event" />
+                  </div>
+                  <div class="field">
+                    <label for="spk-date">日期</label>
+                    <input id="spk-date" type="text" name="speaking_date" />
+                  </div>
+                  <div class="field">
+                    <label for="spk-audience">受众说明</label>
+                    <input id="spk-audience" type="text" name="speaking_audience" />
+                  </div>
+                  <div class="field">
+                    <label for="spk-format">形式</label>
+                    <input id="spk-format" type="text" name="speaking_format" placeholder="圆桌 / 主旨 / 工作坊" />
+                  </div>
+                  <div class="field">
+                    <label for="spk-hono">出席费区间</label>
+                    <input id="spk-hono" type="text" name="speaking_honorarium" />
+                  </div>
+                </div>
+
+                <div class="branch" data-branch="Other" hidden>
+                  <div class="field">
+                    <label for="other-desc">留言</label>
+                    <textarea id="other-desc" name="other_description" rows="6"></textarea>
+                  </div>
+                </div>
+
+                <p id="branch-empty" style="font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.06em; color: var(--ink-3);">
+                  请先在上方选择类别，相应分支字段会展开。
+                </p>
+              </div>
+            </div>
+
+            {/* 右 38% —— 通用 */}
+            <div class="sub-tile universal-tile">
+              <h4>[ 通用 ]</h4>
+              <div class="branch" style="display:grid; gap: var(--space-3);">
+                <div class="field">
+                  <label for="name">您的姓名</label>
+                  <input id="name" type="text" name="name" autocomplete="name" required />
+                </div>
+
+                <div class="field">
+                  <label for="email">邮箱</label>
+                  <input id="email" type="email" name="email" autocomplete="email" required />
+                </div>
+
+                <div class="field">
+                  <label for="referrer">怎样找到我？<span class="muted">（选填）</span></label>
+                  <input id="referrer" type="text" name="referrer" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 蜜罐 */}
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        </section>
+      </div>
+
+      {/* 模块三 —— 提交条 ------------------------------------- */}
+      <div class="grid-12">
+        <div class="submit-band">
+          <button class="submit-btn" type="submit">[ 发送 ]</button>
+          <div class="submit-status">
+            <span class="ready">[ 待发送 ]</span> &nbsp; 回复克制；以事实为准。
+            &nbsp;·&nbsp; 直接邮箱：<a href="mailto:chuanyichuanyi@gmail.com" style="border-bottom: 1px solid var(--rule-soft); color: inherit;">chuanyichuanyi@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="grid-12" id="thanks-wrap" hidden>
+      <div class="thanks">
+        <p>谢谢。已收到。回复会按自己的节奏到来 —— 克制，以事实为准。</p>
+      </div>
+    </div>
+
+  </article>
+
+  <script>
+    // 分支切换
+    const radios = document.querySelectorAll<HTMLInputElement>('input[name="category"]');
+    const branches = document.querySelectorAll<HTMLElement>('.branch[data-branch]');
+    const branchEmpty = document.getElementById('branch-empty');
+
+    function showBranch(value: string) {
+      let any = false;
+      branches.forEach((b) => {
+        const match = b.getAttribute('data-branch') === value;
+        b.hidden = !match;
+        if (match) any = true;
+      });
+      if (branchEmpty) branchEmpty.hidden = any;
+    }
+
+    radios.forEach((r) => {
+      r.addEventListener('change', () => {
+        if (r.checked) showBranch(r.value);
+      });
+    });
+
+    // 表单提交
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const thanksWrap = document.getElementById('thanks-wrap');
+
+    form?.addEventListener('submit', async (e) => {
+      const action = form.getAttribute('action') || '';
+      if (action.includes('REPLACE_ME')) {
+        e.preventDefault();
+        console.warn('Formspree 端点尚未配置。部署前请更新 src/pages/zh/contact.astro。');
+        form.hidden = true;
+        if (thanksWrap) thanksWrap.hidden = false;
+        return;
+      }
+
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          form.hidden = true;
+          if (thanksWrap) thanksWrap.hidden = false;
+        } else {
+          alert('提交失败。请直接发邮件：chuanyichuanyi@gmail.com');
+        }
+      } catch {
+        alert('网络错误。请直接发邮件：chuanyichuanyi@gmail.com');
+      }
+    });
+  </script>
+</Base>

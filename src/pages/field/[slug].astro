@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { CAPABILITIES, type Capability } from '../../data/capabilities';
+import FieldHeroScene from '../../components/FieldHeroScene.tsx';
+
+export async function getStaticPaths() {
+  return CAPABILITIES.map((cap) => ({ params: { slug: cap.id } }));
+}
+
+const { slug } = Astro.params;
+const cap = CAPABILITIES.find((c) => c.id === slug) as Capability | undefined;
+if (!cap) {
+  throw new Error(`No capability found for slug: ${slug}`);
+}
+
+// Pull long-form essay body from the matching content-collection entry.
+// Built so the principal can edit any essay by editing one markdown file.
+const entry = await getEntry('field', slug);
+if (!entry) {
+  throw new Error(`No field essay markdown found for slug: ${slug}`);
+}
+const { Content } = await entry.render();
+
+// Resolve reinforces metadata for the bottom row.
+const reinforcesMeta = cap.reinforces
+  .map((id) => CAPABILITIES.find((c) => c.id === id))
+  .filter((c): c is Capability => Boolean(c));
+
+const baseNum = parseInt(cap.number, 10);
+const pad = (n: number) => n.toString().padStart(2, '0');
+const numA = pad(baseNum + 0); // current — used in eyebrow
+const numB = pad(baseNum + 1); // anchored work
+const numC = pad(baseNum + 2); // reinforces
+const numD = pad(baseNum + 3); // where to start
+
+// Closing teaching gesture: per-field 60–100 word "where to start" copy.
+// Lives here (not in markdown) because it pairs visually with reinforces — both
+// short, both bordered tiles, both rendered consistently across all six pages.
+const WHERE_TO_START: Record<string, string> = {
+  design:
+    'Read Bruno Munari, *Design as Art*. Slowly. Once a year. Then write the brief for the next thing you want to make in plain words — what it is for, what it must do, what it must not do, what it weighs. Hold yourself to the brief through three iterations. Visit a factory if you can. One day on a real production line teaches more than a year of theory.',
+  innovation:
+    'Read Christensen on the innovator\'s dilemma, then read a single non-software case study — Toyota, Patagonia, Arc\'teryx — for the operating model behind the hero product. Then ship something small on a quarterly cadence. The first ship is easy. The third is the discipline. Build the calendar before you write the brief.',
+  'unspoken-rules':
+    'Read Erin Meyer, *The Culture Map*. Then put yourself in a room that is not yours — a meeting in a register you did not grow up in. Listen for what is not said. Take notes afterwards. Over years this builds the substrate ear. If you have access to more than one market, spend a year operating in each one. Visiting teaches you almost nothing.',
+  ai: 'Pick a single decision your team makes every week. Wire one closed loop around it — measurement → output → review → improvement. Run it for three months. Patch every leak. That is infrastructure. Most teams skip this step and stay at slideware forever. Use a model daily; the intuition comes from time on the keyboard, not from reading.',
+  infrastructure:
+    'Read Andy Grove, *High Output Management*. Pick one function you already operate. Write its inputs, outputs, success metric, review cadence, owner. The parts you cannot write down are where the function is fragile. Build infrastructure there. Write the definition of success before you write the brief — the brief gets much shorter after that.',
+  aesthetic:
+    'Read Bruno Munari, Naoto Fukasawa on Without Thought, and any Issey Miyake interview from his design-school years. Then curate, daily — a small notebook of things you find right and things you find wrong, without explanation. Visit physical places. Touch things. Photographs lie. The hand does not. Make small things you are willing to sign your name to.',
+};
+const whereToStart = WHERE_TO_START[cap.id] ?? '';
+
+// Light markdown-ish rendering for the where-to-start paragraph
+// (only *em* spans needed here; the content is short and controlled).
+function renderInlineMd(s: string): string {
+  return s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+---
+<Base
+  title={`${cap.label.toLowerCase()} — caelan h.c.y`}
+  description={cap.thesis}
+  active="field"
+>
+  <article class="cv field-page">
+
+    {/* Hero — single-cluster scene + thesis lede */}
+    <header class="field-hero">
+      <div class="field-hero-scene">
+        <FieldHeroScene client:only="react" capabilityId={cap.id} />
+      </div>
+      <div class="field-hero-text">
+        <p class="eyebrow">[ {numA} · field / {cap.label.toLowerCase()} ]</p>
+        <h1>{cap.label.toLowerCase()}.</h1>
+        <p class="thesis-lede">{cap.thesis}</p>
+        <p class="field-back">
+          <a href="/">[ ↩ back to the field ]</a>
+        </p>
+      </div>
+    </header>
+
+    {/* Body — long-form teaching essay from content collection */}
+    <div class="grid-12">
+      <section class="tile col-12 field-body">
+        <div class="tile-id">
+          <span class="id-num">{numA}</span>
+          <span>essay</span>
+          <span class="id-rule"></span>
+          <span>{cap.eyebrow.toLowerCase()}</span>
+        </div>
+        <div class="field-essay">
+          <Content />
+        </div>
+      </section>
+    </div>
+
+    {/* Anchored work */}
+    <div class="grid-12">
+      <section class="tile col-12">
+        <div class="tile-id">
+          <span class="id-num">{numB}</span>
+          <span>anchored work</span>
+          <span class="id-rule"></span>
+          <span>where this shows up in practice</span>
+        </div>
+        <h2>anchored work</h2>
+        <div class="field-artifact-list">
+          {cap.artifacts.map((a) => (
+            <div class="sub-tile field-artifact">
+              <h4>{a.title.toLowerCase()}</h4>
+              <p>{a.detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    {/* Reinforces */}
+    <div class="grid-12">
+      <section class="tile col-12">
+        <div class="tile-id">
+          <span class="id-num">{numC}</span>
+          <span>reinforces</span>
+          <span class="id-rule"></span>
+          <span>strengthens, and is strengthened by</span>
+        </div>
+        <h2>reinforces</h2>
+        <p>this field strengthens, and is strengthened by:</p>
+        <div class="field-reinforces-row">
+          {reinforcesMeta.map((r) => (
+            <a class="field-reinforce-link" href={`/field/${r.id}`}>
+              <span class="num">{r.number}</span>
+              <span class="label">→ {r.label.toLowerCase()}</span>
+              <span class="eyebrow-min">{r.eyebrow.toLowerCase()}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    {/* Where to start — closing teaching gesture */}
+    <div class="grid-12">
+      <section class="tile col-12 field-start">
+        <div class="tile-id">
+          <span class="id-num">{numD}</span>
+          <span>where to start</span>
+          <span class="id-rule"></span>
+          <span>for the learner</span>
+        </div>
+        <h2>where to start</h2>
+        <p set:html={renderInlineMd(whereToStart)} />
+      </section>
+    </div>
+
+  </article>
+</Base>

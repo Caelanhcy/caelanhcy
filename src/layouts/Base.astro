@@ -1,0 +1,131 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+  showRail?: boolean;
+  active?: 'home' | 'about' | 'contact' | 'field';
+  lang?: 'en' | 'zh';
+}
+
+const {
+  title = 'caelan h.c.y',
+  description = 'Caelan H.C.Y — Malaysian merchandising director and founder, based in Shenzhen.',
+  bodyClass = '',
+  showRail = true,
+  active = 'home',
+  lang = 'en',
+} = Astro.props;
+
+// Compute counterpart URL for the language toggle.
+// On /en route: counterpart is /zh + same path. On /zh route: counterpart is path with /zh stripped.
+const currentPath = Astro.url.pathname || '/';
+const counterpartHref = lang === 'zh'
+  ? (currentPath === '/zh' || currentPath === '/zh/'
+      ? '/'
+      : currentPath.replace(/^\/zh/, '') || '/')
+  : (currentPath === '/' ? '/zh' : '/zh' + currentPath);
+
+// Locale-aware nav labels.
+const navLabels = lang === 'zh'
+  ? { index: '首页', about: '关于', contact: '联系' }
+  : { index: 'index', about: 'about', contact: 'contact' };
+
+// Locale-aware home href + rail base.
+const homeHref = lang === 'zh' ? '/zh' : '/';
+const aboutHref = lang === 'zh' ? '/zh/about' : '/about';
+const contactHref = lang === 'zh' ? '/zh/contact' : '/contact';
+---
+<!doctype html>
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F2EDE3" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <title>{title}</title>
+    {/* Theme bootstrap — DARK is default. Respect stored choice. */}
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('cy-theme');
+          var theme = stored === 'light' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <a class="wordmark" href={homeHref} aria-label="caelan h.c.y — home">
+      <span class="dot" aria-hidden="true"></span>
+      <span>caelan h.c.y</span>
+    </a>
+
+    <div class="top-right-toggles">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <a href={lang === 'en' ? '#' : counterpartHref} class={'seg' + (lang === 'en' ? ' is-active' : '')} aria-label="English" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+        <span class="sep">/</span>
+        <a href={lang === 'zh' ? '#' : counterpartHref} class={'seg' + (lang === 'zh' ? ' is-active' : '')} aria-label="中文" aria-current={lang === 'zh' ? 'page' : undefined}>中</a>
+      </div>
+      <div class="theme-toggle" id="theme-toggle" role="group" aria-label="Theme">
+        <button type="button" class="seg" data-theme-set="light" aria-label="Light mode">[ light ]</button>
+        <span class="sep">/</span>
+        <button type="button" class="seg" data-theme-set="dark" aria-label="Dark mode">[ dark ]</button>
+      </div>
+    </div>
+
+    <slot />
+
+    {showRail && (
+      <nav class="rail" aria-label="Site sections">
+        <a href={homeHref} class={active === 'home' ? 'active' : ''}>
+          <span class="num">01</span><span>{navLabels.index}</span>
+        </a>
+        <a href={aboutHref} class={active === 'about' ? 'active' : ''}>
+          <span class="num">02</span><span>{navLabels.about}</span>
+        </a>
+        <a href={contactHref} class={active === 'contact' ? 'active' : ''}>
+          <span class="num">03</span><span>{navLabels.contact}</span>
+        </a>
+      </nav>
+    )}
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var btns = document.querySelectorAll('#theme-toggle [data-theme-set]');
+        function render() {
+          var t = root.getAttribute('data-theme') || 'dark';
+          btns.forEach(function (b) {
+            if (b.getAttribute('data-theme-set') === t) {
+              b.classList.add('is-active');
+            } else {
+              b.classList.remove('is-active');
+            }
+          });
+        }
+        render();
+        btns.forEach(function (b) {
+          b.addEventListener('click', function () {
+            var t = b.getAttribute('data-theme-set');
+            if (!t) return;
+            root.setAttribute('data-theme', t);
+            try { localStorage.setItem('cy-theme', t); } catch (e) {}
+            render();
+            document.dispatchEvent(new CustomEvent('cy:theme', { detail: { theme: t } }));
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

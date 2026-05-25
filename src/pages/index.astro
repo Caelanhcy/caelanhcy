@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+import { CAPABILITIES } from '../data/capabilities';
+import CapabilityScene from '../components/CapabilityScene.tsx';
+---
+<Base
+  title="caelan h.c.y"
+  description="A generative field of the operating practice — Malaysian, Shenzhen-based; merchandising director and founder."
+  active="home"
+>
+  {/* Desktop: r3f organic-particle scene. Mounted client-only so the rest of
+      the site stays static-rendered and never ships the 3D bundle. */}
+  <main class="scene-stage mobile-stage" aria-label="Capability field">
+    <CapabilityScene client:only="react" />
+
+    {/* The light, lowercase mono chrome surviving from TE — the only
+        engineering chrome on this register. */}
+    <p class="stage-corner-id"><span class="num">[ 01 ]</span> &nbsp; index / capability field</p>
+    <p class="stage-hint">hover a bloom. click to open. the centre opens the cv.</p>
+  </main>
+
+  {/* Mobile fallback: ordered list of capabilities (unchanged) */}
+  <section class="mobile-fallback" aria-label="Capability index">
+    <p class="lede">caelan h.c.y — six clusters</p>
+    <h1>one practice, six clusters.</h1>
+    <p class="muted" style="margin-bottom:32px;">
+      malaysian. based in shenzhen. merchandising director and founder.
+      the field view is best on a larger screen — below is the same content, indexed.
+    </p>
+    <ul>
+      {CAPABILITIES.map((c) => (
+        <li>
+          <button type="button" data-cap-id={c.id} aria-label={`Open ${c.label} essay`}>
+            <span>{c.label.toLowerCase()}</span>
+            <span class="idx">{c.number} &nbsp;·&nbsp; {c.eyebrow.toLowerCase()}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {/* Side panel — interstitial prompt. Thesis only; deep content lives on /field/[slug]. */}
+  <aside class="panel" id="panel" aria-hidden="true" aria-labelledby="panel-title">
+    <button class="panel-close" type="button" id="panel-close" aria-label="Close panel">[ close ]</button>
+    <p class="panel-eyebrow" id="panel-eyebrow">—</p>
+    <h2 id="panel-title">—</h2>
+    <p class="panel-thesis" id="panel-thesis">—</p>
+    <a class="panel-cta" id="panel-cta" href="#">
+      <span class="panel-cta-arrow">→</span>
+      <span class="panel-cta-label">read the full essay</span>
+    </a>
+    <p class="panel-cta-meta" id="panel-cta-meta">six-to-eight-minute read · part of <em>field</em></p>
+  </aside>
+
+  <script>
+    import { CAPABILITIES, type Capability } from '../data/capabilities';
+
+    const panelEl = document.getElementById('panel') as HTMLElement | null;
+    const titleEl = document.getElementById('panel-title');
+    const eyebrowEl = document.getElementById('panel-eyebrow');
+    const thesisEl = document.getElementById('panel-thesis');
+    const ctaEl = document.getElementById('panel-cta') as HTMLAnchorElement | null;
+    const closeBtn = document.getElementById('panel-close');
+
+    function openPanel(cap: Capability) {
+      console.log('[panel] openPanel called with cap.id=' + cap.id + ' label=' + cap.label);
+      if (!panelEl || !titleEl || !eyebrowEl || !thesisEl || !ctaEl) {
+        console.log('[panel] ABORT — missing DOM refs');
+        return;
+      }
+      titleEl.textContent = cap.label.toLowerCase();
+      eyebrowEl.textContent = `[ ${cap.number} / ${cap.label.toLowerCase()} ]`;
+      thesisEl.textContent = cap.thesis;
+      ctaEl.href = `/field/${cap.id}`;
+      ctaEl.setAttribute('aria-label', `Read the full essay on ${cap.label.toLowerCase()}`);
+
+      panelEl.classList.add('is-open');
+      panelEl.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePanel() {
+      if (!panelEl) return;
+      panelEl.classList.remove('is-open');
+      panelEl.setAttribute('aria-hidden', 'true');
+    }
+
+    closeBtn?.addEventListener('click', closePanel);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+    // r3f → panel bridge via window events
+    window.addEventListener('cy:capability', (e: Event) => {
+      const id = (e as CustomEvent<string>).detail;
+      console.log('[panel] RECEIVED cy:capability event with detail=' + id);
+      const cap = CAPABILITIES.find((c) => c.id === id);
+      console.log('[panel] CAPABILITIES.find returned cap.id=' + (cap?.id ?? 'NONE'));
+      if (cap) openPanel(cap);
+    });
+    window.addEventListener('cy:center', () => {
+      window.location.href = '/about';
+    });
+
+    // Mobile fallback wiring
+    document.querySelectorAll<HTMLButtonElement>('.mobile-fallback button[data-cap-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-cap-id');
+        const cap = CAPABILITIES.find((c) => c.id === id);
+        if (cap) openPanel(cap);
+      });
+    });
+  </script>
+</Base>

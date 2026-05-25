@@ -1,0 +1,147 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getEntry } from 'astro:content';
+import { CAPABILITIES, type Capability } from '../../../data/capabilities';
+import FieldHeroScene from '../../../components/FieldHeroScene.tsx';
+
+export async function getStaticPaths() {
+  return CAPABILITIES.map((cap) => ({ params: { slug: cap.id } }));
+}
+
+const { slug } = Astro.params;
+const cap = CAPABILITIES.find((c) => c.id === slug) as Capability | undefined;
+if (!cap) {
+  throw new Error(`No capability found for slug: ${slug}`);
+}
+
+// Pull long-form essay body from the Chinese parallel content collection.
+const entry = await getEntry('field-zh', slug);
+if (!entry) {
+  throw new Error(`No CN field essay markdown found for slug: ${slug}`);
+}
+const { Content } = await entry.render();
+
+const reinforcesMeta = cap.reinforces
+  .map((id) => CAPABILITIES.find((c) => c.id === id))
+  .filter((c): c is Capability => Boolean(c));
+
+const baseNum = parseInt(cap.number, 10);
+const pad = (n: number) => n.toString().padStart(2, '0');
+const numA = pad(baseNum + 0);
+const numB = pad(baseNum + 1);
+const numC = pad(baseNum + 2);
+const numD = pad(baseNum + 3);
+
+// 从哪开始 — per-field 60–100 字闭场落地建议。
+const WHERE_TO_START_ZH: Record<string, string> = {
+  design:
+    '读 Bruno Munari《Design as Art》。慢慢读，一年读一次。然后用最朴素的话把你下一件想做的东西的"简报"写下来——它为何而做、必须做到什么、不能做到什么、它重几克。坚持简报，迭代三轮。如果有条件去一次工厂。一天的产线胜过一年的理论。',
+  innovation:
+    '读 Christensen 的颠覆者困境，再挑一个非软件案例 —— 丰田、Patagonia、Arc\'teryx —— 看它的运营模型，不是看那一件英雄产品。然后以季度节奏发一次小东西。第一次发船容易；第三次才见纪律。先把发船日历写下来，再写产品简报。',
+  'unspoken-rules':
+    '读 Erin Meyer《The Culture Map》。然后走进一间不属于你的会议室 —— 一个你不是在其中长大的运营语境。听人没说的那些。事后做笔记。年复一年这样做，你的"潜层听力"会慢慢长出来。如果你能接触多个市场，在每个里运营一年。只是去访问 —— 几乎学不到任何东西。',
+  ai: '选定你团队每周都要做的一个决策。围着它接一个闭环 —— 衡量 → 输出 → 复盘 → 改进。跑三个月。每一处渗漏都修补。这就是基础设施。大多数团队跳过这一步，停在 PPT 阶段。每天用一个模型。直觉来自键盘时间，不来自读书。',
+  infrastructure:
+    '读 Andy Grove《High Output Management》。挑一个你已经在运营的职能。写出它的输入、产出、成功指标、复盘节奏、负责人。你写不下来的部分，就是这个职能脆弱的地方。在那里建基础设施。先写"成功"的定义，再写简报 —— 简报会因此变得短得多。',
+  aesthetic:
+    '读 Bruno Munari、读 Naoto Fukasawa 关于 Without Thought 的论述、读三宅一生从设计学院年代以来的访谈。然后每天做一件事 —— 一本小本子，写下你觉得对的事、觉得错的事，不必解释为什么。走进实体空间。摸真东西。照片会骗人，手不会。做出一些你愿意签上自己名字的小东西。',
+};
+const whereToStart = WHERE_TO_START_ZH[cap.id] ?? '';
+
+function renderInlineMd(s: string): string {
+  return s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+---
+<Base
+  title={`${cap.labelZh} — 凯伦 caelan h.c.y`}
+  description={cap.thesisZh}
+  active="field"
+  lang="zh"
+>
+  <article class="cv field-page">
+
+    <header class="field-hero">
+      <div class="field-hero-scene">
+        <FieldHeroScene client:only="react" capabilityId={cap.id} />
+      </div>
+      <div class="field-hero-text">
+        <p class="eyebrow">[ {numA} · field / {cap.labelZh} ]</p>
+        <h1>{cap.labelZh}.</h1>
+        <p class="thesis-lede">{cap.thesisZh}</p>
+        <p class="field-back">
+          <a href="/zh">[ ↩ 回到能力场 ]</a>
+        </p>
+      </div>
+    </header>
+
+    <div class="grid-12">
+      <section class="tile col-12 field-body">
+        <div class="tile-id">
+          <span class="id-num">{numA}</span>
+          <span>正文</span>
+          <span class="id-rule"></span>
+          <span>{cap.eyebrowZh}</span>
+        </div>
+        <div class="field-essay">
+          <Content />
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-12">
+      <section class="tile col-12">
+        <div class="tile-id">
+          <span class="id-num">{numB}</span>
+          <span>落地痕迹</span>
+          <span class="id-rule"></span>
+          <span>这一项在实践里的痕迹</span>
+        </div>
+        <h2>落地痕迹</h2>
+        <div class="field-artifact-list">
+          {cap.artifacts.map((a) => (
+            <div class="sub-tile field-artifact">
+              <h4>{a.title.toLowerCase()}</h4>
+              <p>{a.detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-12">
+      <section class="tile col-12">
+        <div class="tile-id">
+          <span class="id-num">{numC}</span>
+          <span>相互强化</span>
+          <span class="id-rule"></span>
+          <span>强化、并被强化</span>
+        </div>
+        <h2>相互强化</h2>
+        <p>这一项强化、并被强化于：</p>
+        <div class="field-reinforces-row">
+          {reinforcesMeta.map((r) => (
+            <a class="field-reinforce-link" href={`/zh/field/${r.id}`}>
+              <span class="num">{r.number}</span>
+              <span class="label">→ {r.labelZh}</span>
+              <span class="eyebrow-min">{r.eyebrowZh}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-12">
+      <section class="tile col-12 field-start">
+        <div class="tile-id">
+          <span class="id-num">{numD}</span>
+          <span>从哪开始</span>
+          <span class="id-rule"></span>
+          <span>给学习者</span>
+        </div>
+        <h2>从哪开始</h2>
+        <p set:html={renderInlineMd(whereToStart)} />
+      </section>
+    </div>
+
+  </article>
+</Base>

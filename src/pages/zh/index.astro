@@ -1,0 +1,98 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CAPABILITIES } from '../../data/capabilities';
+import CapabilityScene from '../../components/CapabilityScene.tsx';
+---
+<Base
+  title="凯伦 caelan h.c.y"
+  description="一片生成式的运营实践场域 —— 马来西亚籍，常驻深圳；商品总监与创始人。"
+  active="home"
+  lang="zh"
+>
+  <main class="scene-stage mobile-stage" aria-label="能力场">
+    <CapabilityScene client:only="react" lang="zh" />
+
+    <p class="stage-corner-id"><span class="num">[ 01 ]</span> &nbsp; 索引 / 能力场</p>
+    <p class="stage-hint">悬停一个聚团。点击展开。中心点击进入简历。</p>
+  </main>
+
+  <section class="mobile-fallback" aria-label="能力索引">
+    <p class="lede">凯伦 caelan h.c.y —— 六大聚团</p>
+    <h1>一种实践，六个聚团。</h1>
+    <p class="muted" style="margin-bottom:32px;">
+      马来西亚籍，常驻深圳。商品总监与创始人。
+      能力场在大屏幕上呈现最完整 —— 下方是同样的内容，按索引列出。
+    </p>
+    <ul>
+      {CAPABILITIES.map((c) => (
+        <li>
+          <button type="button" data-cap-id={c.id} aria-label={`展开 ${c.labelZh} 全文`}>
+            <span>{c.labelZh}</span>
+            <span class="idx">{c.number} &nbsp;·&nbsp; {c.eyebrowZh}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <aside class="panel" id="panel" aria-hidden="true" aria-labelledby="panel-title">
+    <button class="panel-close" type="button" id="panel-close" aria-label="关闭面板">[ 关闭 ]</button>
+    <p class="panel-eyebrow" id="panel-eyebrow">—</p>
+    <h2 id="panel-title">—</h2>
+    <p class="panel-thesis" id="panel-thesis">—</p>
+    <a class="panel-cta" id="panel-cta" href="#">
+      <span class="panel-cta-arrow">→</span>
+      <span class="panel-cta-label">阅读全文</span>
+    </a>
+    <p class="panel-cta-meta" id="panel-cta-meta">六到八分钟阅读 · 属于 <em>field</em></p>
+  </aside>
+
+  <script>
+    import { CAPABILITIES, type Capability } from '../../data/capabilities';
+
+    const panelEl = document.getElementById('panel') as HTMLElement | null;
+    const titleEl = document.getElementById('panel-title');
+    const eyebrowEl = document.getElementById('panel-eyebrow');
+    const thesisEl = document.getElementById('panel-thesis');
+    const ctaEl = document.getElementById('panel-cta') as HTMLAnchorElement | null;
+    const closeBtn = document.getElementById('panel-close');
+
+    function openPanel(cap: Capability) {
+      if (!panelEl || !titleEl || !eyebrowEl || !thesisEl || !ctaEl) return;
+      titleEl.textContent = cap.labelZh;
+      eyebrowEl.textContent = `[ ${cap.number} / ${cap.labelZh} ]`;
+      thesisEl.textContent = cap.thesisZh;
+      ctaEl.href = `/zh/field/${cap.id}`;
+      ctaEl.setAttribute('aria-label', `阅读 ${cap.labelZh} 全文`);
+
+      panelEl.classList.add('is-open');
+      panelEl.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePanel() {
+      if (!panelEl) return;
+      panelEl.classList.remove('is-open');
+      panelEl.setAttribute('aria-hidden', 'true');
+    }
+
+    closeBtn?.addEventListener('click', closePanel);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+    window.addEventListener('cy:capability', (e: Event) => {
+      const id = (e as CustomEvent<string>).detail;
+      const cap = CAPABILITIES.find((c) => c.id === id);
+      if (cap) openPanel(cap);
+    });
+    window.addEventListener('cy:center', () => {
+      window.location.href = '/zh/about';
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.mobile-fallback button[data-cap-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-cap-id');
+        const cap = CAPABILITIES.find((c) => c.id === id);
+        if (cap) openPanel(cap);
+      });
+    });
+  </script>
+</Base>

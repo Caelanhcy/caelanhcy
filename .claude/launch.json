@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "caelanh-website",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/caelanh/Documents/caelanh-website && npm run dev"],
+      "port": 4321
+    }
+  ]
+}
