@@ -82,6 +82,13 @@ const contactHref = lang === 'zh' ? '/zh/contact' : '/contact';
         <span class="sep">/</span>
         <button type="button" class="seg" data-theme-set="dark" aria-label="Dark mode">[ Dark ]</button>
       </div>
+      {active === 'about' && (
+        <div class="zoom-control" role="group" aria-label="Page zoom">
+          <span class="zoom-label">Zoom</span>
+          <input type="range" min="60" max="120" value="100" step="5" id="zoom-slider" aria-label="Page zoom level" />
+          <span class="zoom-value" id="zoom-value">100%</span>
+        </div>
+      )}
     </div>
 
     <slot />
@@ -124,6 +131,37 @@ const contactHref = lang === 'zh' ? '/zh/contact' : '/contact';
             render();
             document.dispatchEvent(new CustomEvent('cy:theme', { detail: { theme: t } }));
           });
+        });
+      })();
+    </script>
+
+    {/* Page zoom slider — only present on /about pages. Persists via localStorage. */}
+    <script is:inline>
+      (function () {
+        var slider = document.getElementById('zoom-slider');
+        var label = document.getElementById('zoom-value');
+        if (!slider || !label) return;
+        var cv = document.querySelector('article.cv');
+        if (!cv) return;
+
+        var saved;
+        try { saved = parseInt(localStorage.getItem('cy-zoom') || '100', 10); }
+        catch (e) { saved = 100; }
+        if (isNaN(saved) || saved < 60 || saved > 120) saved = 100;
+
+        function apply(z) {
+          cv.style.zoom = (z / 100).toString();
+          label.textContent = z + '%';
+        }
+
+        slider.value = saved;
+        apply(saved);
+
+        slider.addEventListener('input', function () {
+          var z = parseInt(slider.value, 10);
+          if (isNaN(z)) return;
+          apply(z);
+          try { localStorage.setItem('cy-zoom', z); } catch (e) {}
         });
       })();
     </script>

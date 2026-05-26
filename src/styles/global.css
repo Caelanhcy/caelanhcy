@@ -294,6 +294,84 @@ hr {
 }
 .lang-toggle .sep { color: var(--ink-3); opacity: 0.4; }
 
+/* ---- Page zoom slider (only on /about pages) ---- */
+
+.zoom-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--s-2) var(--space-2);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  user-select: none;
+}
+.zoom-control .zoom-label {
+  color: var(--ink-3);
+}
+.zoom-control input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 80px;
+  height: 14px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+/* Track — WebKit */
+.zoom-control input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--rule-strong);
+}
+.zoom-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 0;
+  border: 0;
+  margin-top: -5px;
+  cursor: pointer;
+}
+/* Track — Firefox */
+.zoom-control input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--rule-strong);
+  border: 0;
+}
+.zoom-control input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 0;
+  border: 0;
+  cursor: pointer;
+}
+.zoom-control .zoom-value {
+  min-width: 36px;
+  text-align: right;
+  color: var(--accent);
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Print + export modes: hide the slider AND neutralise any user zoom so the
+   PDF renders at the print-tier spec, not at the user's preview zoom. */
+html.print-mode .zoom-control,
+html.export-modal-open .zoom-control {
+  display: none !important;
+}
+html.print-mode article.cv {
+  zoom: 1 !important;
+}
+@media print {
+  .zoom-control { display: none !important; }
+  article.cv { zoom: 1 !important; }
+}
+
 /* ---- Theme toggle (bracketed mono labels) ---- */
 
 .theme-toggle {
