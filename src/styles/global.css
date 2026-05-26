@@ -1638,43 +1638,44 @@ body.is-static-mode .mobile-fallback {
   }
   .cv .tile--pad-lg { padding: 20px 16px !important; }
 
-  /* ---- Hero: stack photo above identity ---- */
+  /* ---- Hero: photo floats top-left, identity wraps to its right ---- */
   .cv-hero .tile-grid-phi {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: stretch !important;
+    display: block !important;     /* no flex/grid on mobile — use float */
     height: auto !important;
   }
-  /* Kill the desktop flex-stretch on hero-left + hero-right that pushed
-     the export button to the bottom of an inflated column (overlapping
-     into the next tile) */
+  /* Clear-fix so float doesn't bleed into the next tile */
+  .cv-hero .tile-grid-phi::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
   .cv-hero .hero-left,
   .cv-hero .hero-right {
     height: auto !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
     align-self: auto !important;
     padding: 0 !important;
     display: block !important;
   }
+  /* Photo: small float-left, ~80px wide */
   .cv-hero .hero-right {
-    order: -1 !important;          /* photo above text on mobile */
-    text-align: center !important;
+    float: left !important;
+    width: 80px !important;
+    margin: 0 14px 6px 0 !important;
+    order: unset !important;
+    text-align: left !important;
   }
-  /* Portrait: aspect-ratio locked, object-fit: cover prevents distortion */
   .cv-portrait-block {
-    max-width: 160px !important;
-    margin: 0 auto !important;
+    max-width: 80px !important;
+    margin: 0 !important;
     display: block !important;
   }
   .cv-portrait-block .portrait-frame,
   .portrait-frame {
-    width: 160px !important;
+    width: 80px !important;
     height: auto !important;
     aspect-ratio: 4 / 5 !important;
     overflow: hidden !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
   }
   .portrait-frame img {
     width: 100% !important;
@@ -1683,20 +1684,31 @@ body.is-static-mode .mobile-fallback {
     object-position: center top !important;
     display: block !important;
   }
-  /* Hide the SUBJECT / FORMAT / SHENZHEN-2025 caption on mobile — it crowds
-     the small viewport without adding value */
+  /* Hide the SUBJECT / FORMAT / SHENZHEN-2025 caption on mobile */
   .portrait-spec { display: none !important; }
+  /* Hide decorative corner marks at this tiny size */
+  .cv-hero .corner { display: none !important; }
 
-  /* ---- Hero typography ---- */
-  .cv h1 { font-size: 32px !important; line-height: 1.1 !important; }
-  .cv .role-meta {
-    font-size: 12px !important;
-    line-height: 1.4 !important;
+  /* ---- Hero typography (sized for the floated 80px photo) ---- */
+  .cv h1 {
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+    margin: 2px 0 6px 0 !important;
   }
-  .cv .eyebrow { margin-bottom: 8px !important; }
+  .cv .role-meta {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 4px !important;
+  }
+  .cv .eyebrow {
+    margin-bottom: 4px !important;
+    font-size: 9px !important;
+  }
   .cv .contact-card {
     font-size: 12px !important;
     line-height: 1.55 !important;
+    clear: left !important;          /* drop below the floated photo */
+    margin-top: 12px !important;
   }
 
   /* ---- Export button: clear separation from surrounding content ---- */
