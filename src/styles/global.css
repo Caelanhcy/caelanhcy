@@ -1644,17 +1644,29 @@ body.is-static-mode .mobile-fallback {
     flex-direction: column !important;
     gap: 16px !important;
     align-items: stretch !important;
+    height: auto !important;
+  }
+  /* Kill the desktop flex-stretch on hero-left + hero-right that pushed
+     the export button to the bottom of an inflated column (overlapping
+     into the next tile) */
+  .cv-hero .hero-left,
+  .cv-hero .hero-right {
+    height: auto !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    align-self: auto !important;
+    padding: 0 !important;
+    display: block !important;
   }
   .cv-hero .hero-right {
     order: -1 !important;          /* photo above text on mobile */
-    display: flex !important;
-    justify-content: center !important;
-    padding: 0 !important;
+    text-align: center !important;
   }
   /* Portrait: aspect-ratio locked, object-fit: cover prevents distortion */
   .cv-portrait-block {
     max-width: 160px !important;
     margin: 0 auto !important;
+    display: block !important;
   }
   .cv-portrait-block .portrait-frame,
   .portrait-frame {
@@ -1662,6 +1674,7 @@ body.is-static-mode .mobile-fallback {
     height: auto !important;
     aspect-ratio: 4 / 5 !important;
     overflow: hidden !important;
+    margin: 0 auto !important;
   }
   .portrait-frame img {
     width: 100% !important;
@@ -1670,7 +1683,9 @@ body.is-static-mode .mobile-fallback {
     object-position: center top !important;
     display: block !important;
   }
-  .portrait-spec { font-size: 9px !important; text-align: center !important; }
+  /* Hide the SUBJECT / FORMAT / SHENZHEN-2025 caption on mobile — it crowds
+     the small viewport without adding value */
+  .portrait-spec { display: none !important; }
 
   /* ---- Hero typography ---- */
   .cv h1 { font-size: 32px !important; line-height: 1.1 !important; }
